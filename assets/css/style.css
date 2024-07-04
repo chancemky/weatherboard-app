@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+.search-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#city-search {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#search-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.current-weather, .forecast, .favorites {
+    margin-top: 20px;
+}
+
+.current-weather h2, .forecast h2, .favorites h2 {
+    color: #007bff;
+}
+
+.forecast-card, .favorite-location {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
