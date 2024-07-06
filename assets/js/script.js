@@ -20,15 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching weather data:', error));
     }
 
-    function displayCurrentWeather(data) {
+/*    function displayCurrentWeather(data) {
         currentWeather.innerHTML = `
             <h2>${data.name}</h2>
             <p>Temperature: ${data.main.temp}°F</p>
             <p>Weather: ${data.weather[0].description}</p>
         `;
-    }
+    }*/
 
-    function displayData(data) {
+    function displayCurrentWeather(data) {
         data.list.forEach(item => {
             const date = new Date(item.dt * 1000).toLocaleDateString();
             const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
@@ -45,5 +45,4 @@ document.addEventListener('DOMContentLoaded', () => {
             forecast.appendChild(weatherData);
         })
     }
-});
 });
