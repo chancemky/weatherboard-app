@@ -27,4 +27,23 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Weather: ${data.weather[0].description}</p>
         `;
     }
+
+    function displayData(data) {
+        data.list.forEach(item => {
+            const date = new Date(item.dt * 1000).toLocaleDateString();
+            const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const temperature = item.main.temp.toFixed(1) + '°F';
+            const weatherInfo = item.weather[0].description;
+
+            const weatherData = document.createElement('div');
+            weatherData.classList.add('forecast-item');
+            weatherData.innerHTML = `
+            <p>${dayOfWeek}</p>
+            <p>${temperature}°F</p>
+            <p>${weatherInfo}</p>
+        `;
+            forecast.appendChild(weatherData);
+        })
+    }
+});
 });
