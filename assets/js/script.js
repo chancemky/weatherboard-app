@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function getWeatherData(city) {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
             .then(response => response.json())
-            .then(data => displayCurrentWeather(data))
+            .then(data => {
+                displayCurrentWeather(data);
+                getForecastData(data.coord.lat, data.coord.lon);
+            })
             .catch(error => console.error('Error fetching weather data:', error));
     }
 
@@ -28,21 +31,38 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-/*    function displayCurrentWeather(data) {
+    function getForecastData(lat, lon) {
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`)
+            .then(response => response.json())
+            .then(data => displayData(data))
+            .catch(error => console.error('Error fetching forecast data:', error));
+    }
+
+    function displayData(data) {
+        forecast.innerHTML = '';
+
+        const displayedDays = [];
+
         data.list.forEach(item => {
-            const date = new Date(item.dt * 1000).toLocaleDateString();
+            const date = new Date(item.dt * 1000);
             const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
             const temperature = item.main.temp.toFixed(1) + '°F';
             const weatherInfo = item.weather[0].description;
 
-            const weatherData = document.createElement('div');
-            weatherData.classList.add('forecast-item');
-            weatherData.innerHTML = `
-            <p>${dayOfWeek}</p>
-            <p>${temperature}°F</p>
-            <p>${weatherInfo}</p>
-        `;
-            forecast.appendChild(weatherData);
-        })
-    }*/
+            if (!displayedDays.includes(dayOfWeek)) {
+                displayedDays.push(dayOfWeek);
+
+                const weatherData = document.createElement('div');
+                weatherData.classList.add('forecast-item');
+                weatherData.innerHTML = `
+                    <p>${dayOfWeek}</p>
+                    <p>${temperature}</p>
+                    <p>${weatherInfo}</p>
+                `;
+                forecast.appendChild(weatherData);
+
+                if (displayedDays.length === 7) return;
+            }
+        });
+    }
 });
