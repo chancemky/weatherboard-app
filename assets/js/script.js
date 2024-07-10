@@ -7,17 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const favoriteList = document.getElementById('favorite-list');
     const saveFavoriteBtn = document.getElementById('save-favorite-btn');
 
-    searchBtn.addEventListener('click', () => {
+    searchBtn.addEventListener('click', async () => {
         const city = citySearch.value.trim();
         if (city) {
-            getWeatherData(city);
+            const isValidCity = await validateCity(city);
+            if (isValidCity) {
+                getWeatherData(city);
+            } else {
+                alert('Invalid city name. Please enter a valid city.');
+            }
         }
     });
 
-    saveFavoriteBtn.addEventListener('click', () => {
+    saveFavoriteBtn.addEventListener('click', async () => {
         const city = citySearch.value.trim();
         if (city) {
-            saveFavorite(city);
+            const isValidCity = await validateCity(city);
+            if (isValidCity) {
+                saveFavorite(city);
+            } else {
+                alert('Invalid city name. Please enter a valid city.');
+            }
         }
     });
 
@@ -82,6 +92,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (displayedDays.length === 6) return;
             }
         });
+    }
+
+    async function validateCity(city) {
+        try {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`);
+            const data = await response.json();
+            return data.cod === 200;
+        } catch (error) {
+            console.error('Error validating city:', error);
+            return false;
+        }
     }
 
     function saveFavorite(city) {
