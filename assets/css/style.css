@@ -27,7 +27,7 @@ h1 {
     font-size: 16px;
 }
 
-#search-btn {
+#search-btn, #save-favorite-btn {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -35,6 +35,7 @@ h1 {
     color: white;
     border: none;
     border-radius: 5px;
+    margin: 5px;
 }
 
 .current-weather, .forecast, .favorites {
@@ -50,4 +51,29 @@ h1 {
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
+}
+
+#favorite-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#favorite-list li {
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#favorite-list button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
 }

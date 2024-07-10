@@ -4,12 +4,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const citySearch = document.getElementById('city-search');
     const currentWeather = document.getElementById('current-weather');
     const forecast = document.getElementById('forecast');
-    const favorites = document.getElementById('favorites');
+    const favoriteList = document.getElementById('favorite-list');
+    const saveFavoriteBtn = document.getElementById('save-favorite-btn');
 
     searchBtn.addEventListener('click', () => {
         const city = citySearch.value.trim();
         if (city) {
             getWeatherData(city);
+        }
+    });
+
+    saveFavoriteBtn.addEventListener('click', () => {
+        const city = citySearch.value.trim();
+        if (city) {
+            saveFavorite(city);
+        }
+    });
+
+    favoriteList.addEventListener('click', (event) => {
+        if (event.target.tagName === 'LI') {
+            const city = event.target.getAttribute('data-city');
+            getWeatherData(city);
+        } else if (event.target.tagName === 'BUTTON') {
+            const city = event.target.parentElement.getAttribute('data-city');
+            removeFavorite(city);
         }
     });
 
@@ -65,4 +83,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    function saveFavorite(city) {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (!favorites.includes(city)) {
+            favorites.push(city);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            displayFavorites();
+        }
+    }
+
+    function removeFavorite(city) {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        favorites = favorites.filter(fav => fav !== city);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        displayFavorites();
+    }
+
+    function displayFavorites() {
+        favoriteList.innerHTML = '';
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        favorites.forEach(city => {
+            const li = document.createElement('li');
+            li.textContent = city;
+            li.setAttribute('data-city', city);
+            li.style.cursor = 'pointer';
+            const button = document.createElement('button');
+            button.textContent = 'Remove';
+            li.appendChild(button);
+            favoriteList.appendChild(li);
+        });
+    }
+    
+    displayFavorites();
 });
