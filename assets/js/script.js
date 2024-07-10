@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 forecast.appendChild(weatherData);
 
-                if (displayedDays.length === 7) return;
+                if (displayedDays.length === 6) return;
             }
         });
     }
